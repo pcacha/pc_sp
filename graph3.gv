@@ -1,0 +1,14 @@
+digraph G
+{
+  //nodes
+  s1[label=start];
+  s2;
+  s3;
+  s4[label=end];
+  //edges
+  s1->s2[label=a];
+  s1->s3[label=c];
+  s1->s2[label=b];
+  s3->s4[label=b];
+  s2->s4[label=d];
+}

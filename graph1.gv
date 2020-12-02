@@ -1,0 +1,35 @@
+digraph G
+{
+	//nodes
+	states[label=start];
+	statee[label=end];
+	statej;
+	statee1;
+	statel1;
+	statel2;
+	statee2;
+	statee3;
+	staten;
+	stateo;
+	statev;
+	statei;
+	statep;
+	//edges
+	states->statej[label=j];
+	statej->statee1[label=e];
+	statee1->statel1[label=l];
+	statel1->statee2[label=e];
+	statee2->staten[label=n];
+	staten->stateo[label=o];
+	stateo->statev[label=v];
+	statev->statei[label=i];
+	statei->statep[label=p];
+	statep->statei[label=i];
+	statei->statev[label=v];
+	statev->stateo[label=o];
+	stateo->staten[label=n];
+	staten->statee2[label=e];
+	statee2->statee3[label=l];
+	statee3->statel2[label=e];
+	statel2->statee[label=j];
+}

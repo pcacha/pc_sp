@@ -1,0 +1,20 @@
+digraph G
+{
+    //nodes
+    ns[label=start];
+    nA;
+    nn;
+    no;
+    n1;
+    n9;
+    ne[label=end];
+    //edges
+    ns->nA[label=A];
+    nA->nn[label=n];
+    nn->nn[label=n];
+    nn->no[label=o];
+    no->n1[label=1];
+    n1->n9[label=9];
+    n9->n9[label=9];
+    n9->ne[label=0];
+}
