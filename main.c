@@ -103,6 +103,22 @@ void shutdown() {
 
 }
 
+void print_edges() {
+  edge *cur;
+  int i;
+
+  for(i = 0; i < vertex_count; i++) {
+    cur = edges[i];
+
+    while(cur != NULL) {
+      printf("%d\n", i);
+      printf("%d\n", cur->dest_index);
+      printf("%c\n\n\n", cur->edge_char);
+      cur = cur->next;
+    }
+  }
+}
+
 /* ____________________________________________________________________________
 
     Hlavní Program
@@ -113,6 +129,8 @@ int main(int argc, char *argv[]) {
   atexit(shutdown);  /* registrace funkce volané při ukončení programu */
   handle_input(argc, argv);  /* zpracuje parametr z příkazové řádky a ověří jeho validitu */
   load_graph(&source_file, &vertex_count, &starting_vertex, &vertices, &edges);  /* načte graf ze souboru */
+
+  print_edges();
 
   printf("All passed!");
   return EXIT_SUCCESS;

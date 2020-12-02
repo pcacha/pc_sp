@@ -23,6 +23,7 @@
 */
 #define LINE_LEN 50  /* maximá délka řádky z načítaného soubour*/
 #define EDGES_SEPARATOR "//edges\n"  /* komentář označující začátek výčtu hran v souboru */
+#define FILE_END_CHAR '}'
 #define MAX_VERTEX_NAME_LEN 11
 #define ORDINARY_VERTEX 0
 #define OUTPUT_VERTEX 1
