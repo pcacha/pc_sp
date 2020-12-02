@@ -20,6 +20,14 @@
 #include "err_manager.h"
 #include "defs.h"
 #include "memory_observer.h"
+#include "hash_table.h"
+
+/* ____________________________________________________________________________
+
+    Globální Proměnné Modulu
+   ____________________________________________________________________________
+*/
+hash_table *table = NULL;
 
 /* ____________________________________________________________________________
 
@@ -104,14 +112,14 @@ static char *get_and_trim_line(char *line, FILE *source_file) {
    ____________________________________________________________________________
 */
 static void skip_header(char line[], FILE *source_file) {
-  const int header_lines_count = 3;
+  const int HEADER_LINES_COUNT = 3;
   int i;
 
   if(source_file == NULL) {
     terminate(RUNTIME_ERR_MSG);
   }
 
-  for(i = 0; i < header_lines_count; i++) {  /* přeskočení hlavičky souboru, složené závorky a komentáře */
+  for(i = 0; i < HEADER_LINES_COUNT; i++) {  /* přeskočení hlavičky souboru, složené závorky a komentáře */
     if(fgets(line, LINE_LEN, source_file) == NULL) {
       terminate(RUNTIME_ERR_MSG);
     }
@@ -149,6 +157,25 @@ static void expand_array(int *vertices_arr_size, int **vertices) {
     <popis>
    ____________________________________________________________________________
 */
+void load_edges(FILE **source_file_ptr, int vertex_count, edge ***edges) {
+  *edges = (edge **) malloc(vertex_count * sizeof(edge *));
+
+  if(*edges == NULL) {
+    free_hash_table(table);
+    terminate(RUNTIME_ERR_MSG);
+  }
+  increase_block_count();
+
+  
+}
+
+/* ____________________________________________________________________________
+
+    void load_graph(FILE **source_file_ptr, int *vertex_count, int *starting_vertex, int **vertices, edge ***edges)
+
+    <popis>
+   ____________________________________________________________________________
+*/
 void load_graph(FILE **source_file_ptr, int *vertex_count, int *starting_vertex, int **vertices, edge ***edges) {
   char line[LINE_LEN], vertex_name[MAX_VERTEX_NAME_LEN], *working_line;
   int count = 0, vertex_label, vertices_arr_size = STARTING_VERTICES_ARR_SIZE;
@@ -159,8 +186,17 @@ void load_graph(FILE **source_file_ptr, int *vertex_count, int *starting_vertex,
     terminate(RUNTIME_ERR_MSG);
   }
 
+  table = (hash_table *) malloc(sizeof(hash_table));
+  if(table == NULL) {
+    terminate(RUNTIME_ERR_MSG);
+  }
+  increase_block_count();
+
+  initialize_hash_table(table);
+
   *vertices = (int *) malloc(STARTING_VERTICES_ARR_SIZE * sizeof(int));
   if(*vertices == NULL) {
+    free_hash_table(table);
     terminate(RUNTIME_ERR_MSG);
   }
   increase_block_count();
@@ -181,12 +217,15 @@ void load_graph(FILE **source_file_ptr, int *vertex_count, int *starting_vertex,
     }
     (*vertices)[count - 1] = (vertex_label == INPUT_VERTEX) ? ORDINARY_VERTEX : vertex_label;  /* uložíme do pole označení, jestli je vrchol výstpuní */
 
-    /* !!!!!! uložit do tabulky */
+    add_to_table(&table, vertex_name, count - 1);
 
     working_line = get_and_trim_line(line, source_file);
   }
 
   *vertex_count = count;
+
+  load_edges(source_file_ptr, count, edges);
+
   fclose(source_file);
   source_file = NULL;
 }
