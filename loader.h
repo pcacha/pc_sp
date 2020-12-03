@@ -13,8 +13,9 @@
 #ifndef _LOADER_H
 #define _LOADER_H
 
-#include "graph.h"
 #include <stdio.h>
+#include "defs.h"
+
 
 /* ____________________________________________________________________________
 

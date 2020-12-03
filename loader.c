@@ -16,7 +16,6 @@
 #include <string.h>
 #include <ctype.h>
 #include "loader.h"
-#include "graph.h"
 #include "err_manager.h"
 #include "defs.h"
 #include "memory_observer.h"

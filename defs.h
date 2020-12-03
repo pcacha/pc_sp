@@ -23,4 +23,15 @@
 #define FALSE 0   /* číselná reprezentace nepravdy */
 #define RUNTIME_ERR_MSG "An unexpected error has occured.\n"
 
+/* ____________________________________________________________________________
+
+    Struktura reprezentuje hranu automatu.
+   ____________________________________________________________________________
+*/
+typedef struct the_edge {
+  int dest_index;  /* index vrcholu, do kterého hrana vede */
+  char edge_char;  /* znak svázaný s touotu hranou automatu */
+  struct the_edge *next;  /* další prvek ve spojovém seznamu hran */
+} edge;
+
 #endif
