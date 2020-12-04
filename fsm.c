@@ -31,8 +31,8 @@ int main(int argc, char *argv[]) {
 				failure();
 			}
 
-			if(regex[i] == 'A') {
-				state = 1;
+			if(regex[i] == 'j') {
+				state = 2;
 				continue;
 			}
 
@@ -41,13 +41,9 @@ int main(int argc, char *argv[]) {
 
 		else if(state == 1) {
 			if(i == string_len) {
-				failure();
+				success();
 			}
 
-			if(regex[i] == 'n') {
-				state = 2;
-				continue;
-			}
 
 			failure();
 		}
@@ -57,12 +53,8 @@ int main(int argc, char *argv[]) {
 				failure();
 			}
 
-			if(regex[i] == 'o') {
+			if(regex[i] == 'e') {
 				state = 3;
-				continue;
-			}
-			if(regex[i] == 'n') {
-				state = 2;
 				continue;
 			}
 
@@ -74,7 +66,7 @@ int main(int argc, char *argv[]) {
 				failure();
 			}
 
-			if(regex[i] == '1') {
+			if(regex[i] == 'l') {
 				state = 4;
 				continue;
 			}
@@ -87,8 +79,8 @@ int main(int argc, char *argv[]) {
 				failure();
 			}
 
-			if(regex[i] == '9') {
-				state = 5;
+			if(regex[i] == 'e') {
+				state = 6;
 				continue;
 			}
 
@@ -100,12 +92,8 @@ int main(int argc, char *argv[]) {
 				failure();
 			}
 
-			if(regex[i] == '0') {
-				state = 6;
-				continue;
-			}
-			if(regex[i] == '9') {
-				state = 5;
+			if(regex[i] == 'j') {
+				state = 1;
 				continue;
 			}
 
@@ -114,9 +102,111 @@ int main(int argc, char *argv[]) {
 
 		else if(state == 6) {
 			if(i == string_len) {
-				success();
+				failure();
 			}
 
+			if(regex[i] == 'l') {
+				state = 7;
+				continue;
+			}
+			if(regex[i] == 'n') {
+				state = 8;
+				continue;
+			}
+
+			failure();
+		}
+
+		else if(state == 7) {
+			if(i == string_len) {
+				failure();
+			}
+
+			if(regex[i] == 'e') {
+				state = 5;
+				continue;
+			}
+
+			failure();
+		}
+
+		else if(state == 8) {
+			if(i == string_len) {
+				failure();
+			}
+
+			if(regex[i] == 'e') {
+				state = 6;
+				continue;
+			}
+			if(regex[i] == 'o') {
+				state = 9;
+				continue;
+			}
+
+			failure();
+		}
+
+		else if(state == 9) {
+			if(i == string_len) {
+				failure();
+			}
+
+			if(regex[i] == 'n') {
+				state = 8;
+				continue;
+			}
+			if(regex[i] == 'v') {
+				state = 10;
+				continue;
+			}
+
+			failure();
+		}
+
+		else if(state == 10) {
+			if(i == string_len) {
+				failure();
+			}
+
+			if(regex[i] == 'o') {
+				state = 9;
+				continue;
+			}
+			if(regex[i] == 'i') {
+				state = 11;
+				continue;
+			}
+
+			failure();
+		}
+
+		else if(state == 11) {
+			if(i == string_len) {
+				failure();
+			}
+
+			if(regex[i] == 'v') {
+				state = 10;
+				continue;
+			}
+			if(regex[i] == 'p') {
+				state = 12;
+				continue;
+			}
+
+			failure();
+		}
+
+		else if(state == 12) {
+			if(i == string_len) {
+				failure();
+			}
+
+			if(regex[i] == 'i') {
+				state = 11;
+				continue;
+			}
 
 			failure();
 		}

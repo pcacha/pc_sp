@@ -24,13 +24,13 @@
 */
 #define LINE_LEN 50  /* maximá délka řádky z načítaného soubour*/
 #define EDGES_SEPARATOR "//edges\n"  /* komentář označující začátek výčtu hran v souboru */
-#define FILE_END_CHAR '}'
-#define MAX_VERTEX_NAME_LEN 11
-#define ORDINARY_VERTEX 0
-#define OUTPUT_VERTEX 1
-#define INPUT_VERTEX 2
-#define STARTING_VERTICES_ARR_SIZE 5
-#define LABEL_DIST 7
+#define FILE_END_CHAR '}'  /* znak ukončující definici hran */
+#define MAX_VERTEX_NAME_LEN 11  /* maximální velikost řetězce reprezetujícího název vrcholu */
+#define ORDINARY_VERTEX 0  /* vrchol není ani vstupní ani výstpuní */
+#define OUTPUT_VERTEX 1  /* vrchol je výstpní */
+#define INPUT_VERTEX 2  /* vrchol je vstupní */
+#define STARTING_VERTICES_ARR_SIZE 5  /* počáteční velikost pole vrcholů */
+#define LABEL_DIST 7  /* počet znaků reprezetující popisek */
 
 
 /* ____________________________________________________________________________

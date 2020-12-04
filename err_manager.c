@@ -25,7 +25,7 @@
 */
 static void help() {
   printf("\nUsage:\n");
-  printf("Program is started with one mandatory argument - a name of a file with a 'gv' extension.\n");
+  printf("The program is started with one mandatory argument - a name of a file with a 'gv' extension.\n");
   printf("\t<app>.exe <file_name>.gv\n");
   printf("The output is a programm in C that needs to be compiled. Then it can be started with a regular expression as a parameter.\n");
   printf("\t<automaton>.exe <regex>\n");

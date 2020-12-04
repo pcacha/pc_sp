@@ -3,7 +3,7 @@
     Generování Konečného Automatu
 
     Hlavičkový soubor defs.h
-    Hlavičkový soubor obsahuje konstanty sdílené napříč projektem
+    Hlavičkový soubor obsahuje konstanty a struktury sdílené napříč projektem
 
     Dialekt : ANSI C
     Překladač: jakýkoliv ANSI C-kompatibilní
@@ -21,7 +21,7 @@
 
 #define TRUE 1   /* číselná reprezentace pravdy */
 #define FALSE 0   /* číselná reprezentace nepravdy */
-#define RUNTIME_ERR_MSG "An unexpected error has occured.\n"
+#define RUNTIME_ERR_MSG "An unexpected error has occured.\n"  /* zpráva oznamující neočekávanou chybu */
 
 /* ____________________________________________________________________________
 
@@ -31,7 +31,7 @@
 typedef struct the_edge {
   int dest_index;  /* index vrcholu, do kterého hrana vede */
   char edge_char;  /* znak svázaný s touotu hranou automatu */
-  struct the_edge *next;  /* další prvek ve spojovém seznamu hran */
+  struct the_edge *next;  /* další hrana v pořadí - slouží k vytváření spojového seznamu */
 } edge;
 
 #endif
