@@ -1,0 +1,8 @@
+BIN = fsmgen.exe
+OBJ = err_manager.obj memory_observer.obj hash_table.obj loader.obj main.obj
+
+.c.obj:
+	cl $< /c
+
+$(BIN): $(OBJ)
+	cl $(OBJ) /Fe$(BIN)
