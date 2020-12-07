@@ -266,6 +266,34 @@ static void load_edges(FILE **source_file_ptr, int vertex_count, edge ***edges) 
 
 /* ____________________________________________________________________________
 
+    static int is_vertices_end(char *line)
+
+    Funkce zjistí, jestli je aktuální řádka komentář uvozující konec výčtu vrcholů a začátek výčtu hran.
+   ____________________________________________________________________________
+*/
+static int is_vertices_end(char *line) {
+  int i;
+  char *sep = EDGES_SEPARATOR;
+
+  if(line == NULL) {  /* ošetření vstupu */
+    return FALSE;
+  }
+
+  for(i = 0; i < EDGES_SEP_CHLEN; i++) {  /* musíme zkontrolovat všechny znaky separátoru */
+    if((int) strlen(line) == i) {  /* pokud podmínka platí, nemůžeme z indexu i přečíst další znak, řetězec je moc krátky */
+      return FALSE;
+    }
+
+    if(line[i] != sep[i]) {  /* pokud se nějaký znak nerovná, řetězce se nerovnají a vrátíme false */
+      return FALSE;
+    }
+  }
+
+  return TRUE;
+}
+
+/* ____________________________________________________________________________
+
     void load_graph(FILE **source_file_ptr, int *vertex_count, int *starting_vertex, int **vertices, edge ***edges)
 
     Funkce načte z textového souboru postupně vrcholy a hrany grafu. Soubor následně uzavře.
@@ -300,7 +328,7 @@ void load_graph(FILE **source_file_ptr, int *vertex_count, int *starting_vertex,
   skip_header(line, source_file);  /* přeskočíme řádky bez relevantních informací */
   working_line = get_and_trim_line(line, source_file);  /* načteme a ořízneme další řádku */
 
-  while(strcmp(working_line, EDGES_SEPARATOR) != 0) {  /* dokud nenarazíme na komentář označující začátek hran */
+  while(!is_vertices_end(working_line)) {  /* dokud nenarazíme na komentář označující začátek hran */
     parse_vertex(&vertex_label, vertex_name, working_line);  /* získám informace o vrcholu a zvýšíme jejich počet */
     count++;
 
@@ -324,5 +352,5 @@ void load_graph(FILE **source_file_ptr, int *vertex_count, int *starting_vertex,
 
   free_hash_table(table);  /* uvolníme tabulku a uzavřeme sooubor */
   fclose(source_file);
-  source_file = NULL;
+  *source_file_ptr = NULL;
 }

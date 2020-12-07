@@ -150,28 +150,32 @@ void shutdown() {
   /* uzavření souborů */
   if(source_file != NULL) {
     fclose(source_file);
+    source_file = NULL;
   }
 
   if(output_file != NULL) {
     fclose(output_file);
+    output_file = NULL;
   }
 
   /* uvolnění pole vrcholů */
   if(vertices != NULL) {
     free(vertices);
     decrease_block_count();
+    vertices = NULL;
   }
 
   /* uvolnění pole zřetězených seznamů a samotných seznamů */
   if(edges != NULL) {
     for(i = 0; i < vertex_count; i++) {
-      if(edges[i] != NULL) {
+      if(edges[i] != NULL) {  /* pokud existuje hlavička zřetězeného seznamu, celý ho uvloníme */
         free_edge(edges[i]);
       }
     }
 
-    free(edges);
+    free(edges);  /* uvolnění pole zřetězených seznamů */
     decrease_block_count();
+    edges = NULL;
   }
 }
 
@@ -226,6 +230,9 @@ void make_output_file() {
   }
 
   fprintf(output_file, GENERATED_FOOTER);
+
+  fclose(output_file);  /* uzavření souboru */
+  output_file = NULL;
 }
 
 /* ____________________________________________________________________________
@@ -239,6 +246,6 @@ int main(int argc, char *argv[]) {
   load_graph(&source_file, &vertex_count, &starting_vertex, &vertices, &edges);  /* načte graf ze souboru */
   make_output_file(); /* vytvoří výstpní soubor s kódem v ANSIC C */
 
-  printf("fsm.c was successfully created!");
+  printf("fsm.c was successfully created!\n");
   return EXIT_SUCCESS;
 }
