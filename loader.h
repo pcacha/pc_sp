@@ -31,6 +31,7 @@
 #define INPUT_VERTEX 2  /* vrchol je vstupní */
 #define STARTING_VERTICES_ARR_SIZE 5  /* počáteční velikost pole vrcholů */
 #define LABEL_DIST 7  /* počet znaků reprezetující popisek */
+#define ARROW_LEN 2  /* počet znaků šipky uvedené v definici hrany */
 
 
 /* ____________________________________________________________________________

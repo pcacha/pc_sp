@@ -68,7 +68,7 @@ static char *left_trim(char *line) {
    ____________________________________________________________________________
 */
 static void parse_vertex(int *vertex_label, char *vertex_name, char *line) {
-  int i;
+  int i, j;
 
   /* ošetření vstupu */
   if(vertex_label == NULL || vertex_name == NULL || line == NULL) {
@@ -78,15 +78,21 @@ static void parse_vertex(int *vertex_label, char *vertex_name, char *line) {
 
   for(i = 0; i < (int) strlen(line); i++) {  /* iterujeme přes všechny znaky řetězce */
     if(line[i] == ';') {  /* konec řádky -> řetězec obsahuje pouze název vrcholu */
-      line[i] = '\0';
-      strcpy(vertex_name, line);  /* uložíme název vrcholu */
+
+      for(j = 0; j < i; j++) {  /* získáme název překopírováním */
+        vertex_name[j] = line[j];
+      }
+      vertex_name[i] = '\0';
+
       *vertex_label = ORDINARY_VERTEX;  /* vrchol není ani vstupní ani výstupní */
       return;
     }
 
     if(line[i] == '[') {  /* pokud nalezneme hranatou závorku, budou následovat parametry */
-      line[i] = '\0';
-      strcpy(vertex_name, line);  /* získáme název */
+      for(j = 0; j < i; j++) {  /* získáme název překopírováním */
+        vertex_name[j] = line[j];
+      }
+      vertex_name[i] = '\0';
 
       if(line[i + LABEL_DIST] == 's') {  /* pokud po posunutí pointeru o délku popisku získáme 's', vrchol je vstupní, pokud ne musí být výstupní */
         *vertex_label = INPUT_VERTEX;
@@ -171,7 +177,7 @@ static void expand_array(int *vertices_arr_size, int **vertices) {
    ____________________________________________________________________________
 */
 static void parse_edge(char start_vertex_name[MAX_VERTEX_NAME_LEN], char end_vertex_name[MAX_VERTEX_NAME_LEN], char *edge_char, char *line) {
-  int i;
+  int i, j;
 
   if(start_vertex_name == NULL || end_vertex_name == NULL || edge_char == NULL || line == NULL) {
     free_table_and_terminate();
@@ -179,17 +185,25 @@ static void parse_edge(char start_vertex_name[MAX_VERTEX_NAME_LEN], char end_ver
 
   for(i = 0; i < (int) strlen(line); i++) {  /* iterujeme přes všechny znaky řetězce */
     if(line[i] == '-' && line[i + 1] == '>') {  /* pokud jsme nalezli předěl mezi počátečním a koncovým vrcholem hrany ('->') */
-      line[i] = '\0';  /* nastavíme konec řetězce na správně místo a zkopírujeme název počátečního vrcholu */
-      strcpy(start_vertex_name, line);
-      line = &line[i + 2];  /* posuneme ukazatel na začátek názvu koncového vrcholu */
+
+      for(j = 0; j < i; j++) {  /* zkopírujeme název počátečního vrcholu */
+        start_vertex_name[j] = line[j];
+      }
+      start_vertex_name[i] = '\0';
+
+      line = &line[i + ARROW_LEN];  /* posuneme ukazatel na začátek názvu koncového vrcholu */
       break;
     }
   }
 
   for(i = 0; i < (int) strlen(line); i++) {
     if(line[i] == '[') {  /* nalezneme znak, který již nenáleží názvu */
-      line[i] = '\0';  /* zkopírujeme název koncového vrcholu */
-      strcpy(end_vertex_name, line);
+
+      for(j = 0; j < i; j++) {  /* zkopírujeme název koncového vrcholu hrany */
+        end_vertex_name[j] = line[j];
+      }
+      end_vertex_name[i] = '\0';
+
       *edge_char = line[i + LABEL_DIST];  /* znak označující aktivaci přechodu po hraně je ve odsazen o délku popisku */
       return;
     }
